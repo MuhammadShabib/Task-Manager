@@ -35,20 +35,16 @@ const displayTasks = () => {
     taskInnerDiv.innerHTML = `<span id="taskname">${key.split("_")[1]}</span>`;
     let editButton = document.createElement("button");
     editButton.classList.add("edit");
-    editButton.innerHTML = "Edit"; 
-    
-    taskInnerDiv.appendChild(editButton);
-    taskInnerDiv.innerHTML += `<button class="delete">Delete</i></button>`;
-    tasksDiv.appendChild(taskInnerDiv);
-
-    
+    editButton.innerHTML = `<i class="fa-solid fa-pen-to-square"></i>`;
     if (!JSON.parse(value)) {
       editButton.style.visibility = "visible";
     } else {
       editButton.style.visibility = "hidden";
       taskInnerDiv.classList.add("completed");
     }
-   
+    taskInnerDiv.appendChild(editButton);
+    taskInnerDiv.innerHTML += `<button class="delete"><i class="fa-solid fa-trash"></i></button>`;
+    tasksDiv.appendChild(taskInnerDiv);
   }
 
   tasks = document.querySelectorAll(".task");
@@ -71,21 +67,18 @@ const displayTasks = () => {
       let parent = element.parentElement;
       newTaskInput.value = parent.querySelector("#taskname").innerText;
       updateNote = parent.id;
-
       parent.remove();
     });
   });
 
   //Delete Tasks
-
   deleteTasks = document.getElementsByClassName("delete");
-
   Array.from(deleteTasks).forEach((element, index) => {
     element.addEventListener("click", (e) => {
       let con = confirm("Are you sure to delete");
       if (con) {
         e.stopPropagation();
-       
+
         let parent = element.parentElement;
         removeTask(parent.id);
         parent.remove();
